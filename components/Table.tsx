@@ -10,41 +10,34 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface TableReviewsProps {
-  data: {
-    title: string;
-    avatar: string;
-    author: string;
-    year: number;
-    reviews: { positive: number; negative: number };
+interface JobsDataProp {
+  jobsData: {
+    city: string;
+    collectionId: string;
+    collectionName: string;
+    country: string;
+    created: string;
+    id: string;
+    isremote: boolean;
+    job_title: string;
+    link: string;
+    logo: string;
+    province: string;
+    tags: string[];
+    updated: string;
+    user: string;
   }[];
 }
 
 
 
-const pb = new PocketBase('http://127.0.0.1:8090');
 
 
 
-export default function TableReviews() {
+export default function TableReviews({jobsData}: JobsDataProp) {
   const { classes, theme } = useStyles();
-  const [jobsData, setJobData] = useState([]);
 
   
-  
-  useEffect(()=>{
-    const getJobs = async() => {
-      const res = await pb.collection('jobs').getList(1, 50, { '$autoCancel': false });
-      console.log(res.items)
-      console.log("UseEffect")
-      setJobData(res.items)
-          }
-
-  getJobs();
-
-  },[]);
-
-
   const rows = jobsData?.map((row: any) => {
 
     return (
@@ -58,9 +51,15 @@ export default function TableReviews() {
           <Text size="sm">{row.city}, {row.country}</Text>
         </td>
         <td>
-          <Anchor<'a'> size="sm" onClick={(event) => event.preventDefault()}>
-            {row.job_title}
-          </Anchor>
+          
+            {row.tags.map((tag: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined) => (
+            
+            <Anchor<'a'> size="sm" onClick={(event) => event.preventDefault()}> {tag},
+            </Anchor>
+            
+            ))}
+          
+
         </td>
         <td>
           3434

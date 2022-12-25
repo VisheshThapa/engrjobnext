@@ -1,6 +1,8 @@
+import React, { useEffect, useState } from 'react';
+import PocketBase from 'pocketbase';
 
 import HeaderResponsive from '../components/HeaderResponsive';
-import Table, { TableReviews } from '../components/Table'
+import Table  from '../components/Table'
 import { Chip } from '@mantine/core';
 const links = [{
       "link": "/",
@@ -19,78 +21,59 @@ const links = [{
       "label": "Post a Job"
     },]
 
-const table_data = [
-    {
-      "title": "Foundation",
-      "author": "Isaac Asimov",
-      "year": 1951,
-      "reviews": {
-        "positive": 2223,
-        "negative": 259
-      }
-    },
-    {
-      "title": "Frankenstein",
-      "author": "Mary Shelley",
-      "year": 1818,
-      "reviews": {
-        "positive": 5677,
-        "negative": 1265
-      }
-    },
-    {
-      "title": "Solaris",
-      "author": "Stanislaw Lem",
-      "year": 1961,
-      "reviews": {
-        "positive": 3487,
-        "negative": 1845
-      }
-    },
-    {
-      "title": "Dune",
-      "author": "Frank Herbert",
-      "year": 1965,
-      "reviews": {
-        "positive": 8576,
-        "negative": 663
-      }
-    },
-    {
-      "title": "The Left Hand of Darkness",
-      "author": "Ursula K. Le Guin",
-      "year": 1969,
-      "reviews": {
-        "positive": 6631,
-        "negative": 993
-      }
-    },
-    {
-      "title": "A Scanner Darkly",
-      "author": "Philip K Dick",
-      "year": 1977,
-      "reviews": {
-        "positive": 8124,
-        "negative": 1847
-      }
-    },
-  ]
-
 
 export default function Home() {
-
   
+  const pb = new PocketBase('http://127.0.0.1:8090');
+  const [jobsData, setJobData] = useState([]);
+  const [jobsDataInital, setJobDataInital] = useState([]);
+  const [chipValue, setChipValue] = useState([]);
+
+  const getJobs = async() => {
+      const res = await pb.collection('jobs').getList(1, 50, { '$autoCancel': false });
+      setJobData(res.items)
+      setJobDataInital(res.items)
+          }
+
+  const filterJobs = () => {
+    const filteredJobs = jobsDataInital.filter(data => data.tags.some(item => chipValue.includes(item)))
+    
+    setJobData(filteredJobs)
+   }
+
+  useEffect(()=>{
+  getJobs();
+  },[]);
+
+
+  useEffect(() => {
+   // adding event listeners on mount here
+   
+   filterJobs();
+
+   if(chipValue.length === 0){
+    setJobData(jobsDataInital);
+   }
+   
+  //  return () => {
+  //      // cleaning up the listeners here
+  //  }
+}, [chipValue]);
+
+  console.log("Job Data",jobsData)
+  console.log("Chip Value",chipValue)
   return (
     <div>
         
         <HeaderResponsive links={links}/>
-      <Chip.Group position="center" multiple mt={15}>
-          <Chip value="1">Multiple chips</Chip>
-          <Chip value="2">Can be selected</Chip>
-          <Chip value="3">At a time</Chip>
+      <Chip.Group position="center" multiple mt={15} value={chipValue} onChange={setChipValue}>
+          <Chip value="Mechanical">Mechanical</Chip>
+          <Chip value="Civil">Civil</Chip>
+          <Chip value="Construction">Contruction</Chip>
+          <Chip value="S">S</Chip>
       </Chip.Group>
       
-      <Table></Table>
+      <Table jobsData = {jobsData} ></Table>
 
       
     </div>
