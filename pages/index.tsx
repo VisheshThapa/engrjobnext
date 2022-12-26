@@ -4,22 +4,10 @@ import PocketBase from 'pocketbase';
 import HeaderResponsive from '../components/HeaderResponsive';
 import Table  from '../components/Table'
 import { Chip } from '@mantine/core';
-const links = [{
-      "link": "/",
-      "label": "Home"
-    },
-    {
-      "link": "/pricing",
-      "label": "Pricing"
-    },
-    {
-      "link": "/learn",
-      "label": "Learn"
-    },
-    {
-      "link": "/community",
-      "label": "Post a Job"
-    },]
+
+
+
+
 
 
 export default function Home() {
@@ -60,19 +48,19 @@ export default function Home() {
   //  }
 }, [chipValue]);
 
-  console.log("Job Data",jobsData)
-  console.log("Chip Value",chipValue)
   return (
     <div>
         
-        <HeaderResponsive links={links}/>
+      
+
+
       <Chip.Group position="center" multiple mt={15} value={chipValue} onChange={setChipValue}>
           <Chip value="Mechanical">Mechanical</Chip>
           <Chip value="Civil">Civil</Chip>
-          <Chip value="Construction">Contruction</Chip>
+          <Chip value="Construction">Construction</Chip>
           <Chip value="S">S</Chip>
       </Chip.Group>
-      
+
       <Table jobsData = {jobsData} ></Table>
 
       

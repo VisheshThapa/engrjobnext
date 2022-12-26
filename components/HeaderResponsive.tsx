@@ -4,7 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantine/ds';
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons';
-
+import Link from 'next/link';
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
@@ -76,11 +76,26 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface HeaderResponsiveProps {
-  links: { link: string; label: string }[];
-}
 
-export default function HeaderResponsive({ links }: HeaderResponsiveProps) {
+const links = [{
+      "link": "/",
+      "label": "Home"
+    },
+    {
+      "link": "/checkout",
+      "label": "Checkout"
+    },
+    {
+      "link": "/learn",
+      "label": "Learn"
+    },
+    {
+      "link": "/postjob",
+      "label": "Post a Job"
+    },]
+
+
+export default function HeaderResponsive() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
   const [opened, { toggle, close }] = useDisclosure(false);
@@ -88,30 +103,30 @@ export default function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
-    <a
+    
+    <Link
       key={link.label}
       href={link.link}
       className={cx(classes.link, { [classes.linkActive]: active === link.link })}
       onClick={(event) => {
-        event.preventDefault();
+        
         setActive(link.link);
         close();
       }}
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (
-    <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
+    <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
         <MantineLogo size={28} />
+
         <Group spacing={5} className={classes.links}>
           {items}
-
-
-
         </Group>
+
         <ActionIcon
           variant="outline"
           color={dark ? 'yellow' : 'blue'}
