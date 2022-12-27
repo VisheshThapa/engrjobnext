@@ -52,7 +52,7 @@ export default function TableReviews({jobsData}: JobsDataProp) {
         </td>
         <td>
           
-            {row.tags.map((tag: string | number | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined) => (
+            {row.tags.map((tag: string | number ) => (
             
             <Anchor key={tag} size="sm"> {tag},
             </Anchor>
