@@ -1,10 +1,10 @@
 import HeaderResponsive from "./HeaderResponsive"
 
-export default function Layout({ children, props}:{children:any,props:any}) {
+export default function Layout({ children}:{children:any}) {
   return (
     <>
       <HeaderResponsive/>
-      <main {...props}>{children}</main>
+      <main >{children}</main>
     </>
   )
 }
