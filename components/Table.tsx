@@ -43,7 +43,7 @@ export default function TableReviews({jobsData}: JobsDataProp) {
     return (
       <tr key={row.job_title}>
         <td>
-          <Anchor<'a'> size="sm" onClick={(event) => event.preventDefault()}>
+          <Anchor size="sm" onClick={(event) => event.preventDefault()}>
             {row.job_title}
           </Anchor>
         </td>

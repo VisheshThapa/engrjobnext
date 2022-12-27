@@ -29,6 +29,13 @@ export default function PostJob(){
         minRows={2}
             />
 
+            <Textarea
+        placeholder="Example: CAD $50- $60k"
+        label="Salary"
+        autosize
+        minRows={5}
+            />
+
         </div>
     )
 
