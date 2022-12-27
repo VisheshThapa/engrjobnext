@@ -54,7 +54,7 @@ export default function TableReviews({jobsData}: JobsDataProp) {
           
             {row.tags.map((tag: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined) => (
             
-            <Anchor<'a'> size="sm" onClick={(event) => event.preventDefault()}> {tag},
+            <Anchor key={tag} size="sm" onClick={(event) => event.preventDefault()}> {tag},
             </Anchor>
             
             ))}
