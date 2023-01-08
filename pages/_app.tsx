@@ -1,14 +1,20 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
+import { UserContext } from '../lib/context';
 
 import { useEffect, useState } from 'react';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import Layout from '../components/Layout';
+import { useUserData } from '../lib/hooks';
+import '../styles/globals.css';
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
+  const userData = useUserData();
+
   return (
     <>
     
@@ -22,9 +28,12 @@ export default function App(props: AppProps) {
           colorScheme
         }}
       >
-        <Layout>
-        <Component {...pageProps} />
-        </Layout>
+        <UserContext.Provider value={userData}>
+          <Layout>
+          <Component {...pageProps} />
+          </Layout>
+        </UserContext.Provider>
+
       </MantineProvider>
       </ColorSchemeProvider>
     </>

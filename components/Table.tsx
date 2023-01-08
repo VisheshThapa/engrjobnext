@@ -13,20 +13,16 @@ const useStyles = createStyles((theme) => ({
 interface JobsDataProp {
   jobsData: {
     city: string;
-    collectionId: string;
-    collectionName: string;
+    company: string;
     country: string;
-    created: string;
-    id: string;
-    isremote: boolean;
-    job_title: string;
+    createdAt: string;
+    title: string;
     link: string;
     logo: string;
     province: string;
     tags: string[];
-    updated: string;
-    user: string;
-  }[];
+    updatedAt: string;
+  };
 }
 
 
@@ -41,10 +37,13 @@ export default function TableReviews({jobsData}: JobsDataProp) {
   const rows = jobsData?.map((row: any) => {
 
     return (
-      <tr key={row.job_title}>
-        <td>
+      <tr key={row.title}>
+
+        <td >
           <Anchor size="sm" >
-            {row.job_title}
+            
+              {row.title}
+        
           </Anchor>
         </td>
         <td>
@@ -62,7 +61,7 @@ export default function TableReviews({jobsData}: JobsDataProp) {
 
         </td>
         <td>
-          3434
+          {row.createdAt}
         </td>
         <td>
             <Text size="xs" color="teal" weight={700}>
@@ -70,13 +69,15 @@ export default function TableReviews({jobsData}: JobsDataProp) {
             </Text>
 
         </td>
+
+        
       </tr>
     );
   });
 
   return (
-    <ScrollArea>
-      <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
+    <ScrollArea mx = "3rem">
+      <Table sx={{ minWidth: 800 }}  verticalSpacing="xs">
         <thead>
           <tr>
             <th>Job Title</th>
@@ -86,7 +87,7 @@ export default function TableReviews({jobsData}: JobsDataProp) {
             <th>Days Ago</th>
           </tr>
         </thead>
-        <tbody>{rows}</tbody>
+        <tbody >{rows}</tbody>
       </Table>
     </ScrollArea>
   );

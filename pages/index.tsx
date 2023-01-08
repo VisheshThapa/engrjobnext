@@ -1,37 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import PocketBase from 'pocketbase';
-
 import HeaderResponsive from '../components/HeaderResponsive';
 import Table  from '../components/Table'
 import { Chip } from '@mantine/core';
+import Loader from '../components/Loader';
+import { firestore, postToJSON } from '../lib/firebase';
+import { Timestamp, query, where, orderBy, limit, collectionGroup, getDocs } from 'firebase/firestore';
+import Card from '../components/Card';
+const LIMIT = 10;
+
+export async function getServerSideProps(context: any) {
+  const ref = collectionGroup(firestore, 'jobs');
+  const jobsQuery = query(
+    ref,
+    where('published', '==', true),
+    orderBy('createdAt', 'desc'),
+    limit(LIMIT),
+  )
+  const jobs = (await getDocs(jobsQuery)).docs.map(postToJSON);
+  return {
+    props: { jobs }, // will be passed to the page component as props
+  };
+}
 
 
+export default function Home(props: any) {
 
-
-
-
-export default function Home() {
-  
-  const pb = new PocketBase('http://127.0.0.1:8090');
-  const [jobsData, setJobData] = useState([]);
-  const [jobsDataInital, setJobDataInital] = useState([]);
   const [chipValue, setChipValue] = useState([]);
-
-  const getJobs = async() => {
-      const res = await pb.collection('jobs').getList(1, 50, { '$autoCancel': false });
-      setJobData(res.items)
-      setJobDataInital(res.items)
-          }
+  
+  const [jobsData, setJobData] = useState(props.jobs);
+  const [jobsDataInital, setJobDataInital] = useState(props.jobs);
 
   const filterJobs = () => {
-    const filteredJobs = jobsDataInital.filter(data => data.tags.some(item => chipValue.includes(item)))
-    
+    const filteredJobs = jobsDataInital.filter(data => data.tags.some(item => chipValue.includes(item)))    
     setJobData(filteredJobs)
    }
 
-  useEffect(()=>{
-  getJobs();
-  },[]);
 
 
   useEffect(() => {
@@ -46,11 +49,11 @@ export default function Home() {
   //  return () => {
   //      // cleaning up the listeners here
   //  }
-}, [chipValue]);
+}, [chipValue]); 
 
   return (
     <div>
-        
+        <Loader show />
       
 
 
@@ -61,8 +64,8 @@ export default function Home() {
           <Chip value="S">S</Chip>
       </Chip.Group>
 
-      <Table jobsData = {jobsData} ></Table>
-
+      
+      <Card jobsData={jobsData}></Card>
       
     </div>
   )

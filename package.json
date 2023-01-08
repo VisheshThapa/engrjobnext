@@ -1,6 +1,9 @@
 {
   "name": "nextfrontjob",
   "version": "0.1.0",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,25 +18,30 @@
     "@mantine/ds": "^5.7.2",
     "@mantine/hooks": "^5.7.2",
     "@mantine/next": "^5.7.1",
+    "@prisma/client": "^4.8.0",
     "@stripe/react-stripe-js": "^1.16.1",
     "@stripe/stripe-js": "^1.46.0",
     "@tabler/icons": "^1.111.0",
-    "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
     "eslint": "8.27.0",
-    "eslint-config-next": "13.0.2",
+    "eslint-config-next": "^13.1.1",
+    "firebase": "^9.15.0",
+    "lodash.debounce": "^4.0.8",
     "next": "^13.1.1",
-    "pocketbase": "^0.8.0-rc4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "planetscale": "^2.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "sass": "^1.57.1",
-    "stripe": "^11.5.0",
-    "typescript": "4.8.4"
+    "stripe": "^11.5.0"
   },
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.19",
-    "tailwindcss": "^3.2.4"
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
   }
 }

@@ -5,6 +5,9 @@ import { MantineLogo } from '@mantine/ds';
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 import Link from 'next/link';
+import { useContext } from 'react';
+import { UserContext } from '../lib/context';
+
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
@@ -92,10 +95,19 @@ const links = [{
     {
       "link": "/postjob",
       "label": "Post a Job"
-    },]
+    },
+
+    {
+      "link": "/enter",
+      "label": "Enter"
+    },
+  
+  ]
 
 
 export default function HeaderResponsive() {
+  const { user, username } = useContext(UserContext)
+
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
   const [opened, { toggle, close }] = useDisclosure(false);
@@ -134,8 +146,37 @@ export default function HeaderResponsive() {
           title="Toggle color scheme"
           className=""
         >
+
+
           {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
         </ActionIcon>
+
+        {/* user is signed-in and has username */}
+        {username && (
+          <>
+            <li className="push-left">
+              <Link href="/admin">
+                <button className="btn-blue">Write Posts</button>
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${username}`}>
+                <img src={user?.photoURL} />
+              </Link>
+            </li>
+          </>
+        )}
+
+        {/* user is not signed OR has not created username */}
+        {!username && (
+          <li>
+            <Link href="/enter">
+              <button className="btn-blue">Log in</button>
+            </Link>
+          </li>
+        )}
+
+
         
         <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
         
