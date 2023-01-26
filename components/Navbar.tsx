@@ -129,7 +129,7 @@ export default function Navbar() {
       <Container className={classes.header}>
 
         <Link href="/home" className={cx(classes.link, { [classes.linkActive]: active === '/home' })}>
-            <Image src = {logo} alt = 'logo image' width = '55' height = '55' />        
+            <Image src = {logo} alt = 'logo image' width = '55' height = '137' />        
         </Link>
         
         
