@@ -87,7 +87,7 @@ const links = [{
       "label": "Home"
     },
     {
-      "link": "/postjob",
+      "link": "/postjobsoon",
       "label": "Post a Job"
     },
 
@@ -128,7 +128,11 @@ export default function Navbar() {
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
 
-        <Link href="/home" className={cx(classes.link, { [classes.linkActive]: active === '/home' })}>
+        <Link href="/" onClick={(event) => {
+        
+        setActive('/');
+        close();
+      }}>
             <Image src = {logo} alt = 'logo image' width = '137' height = '55' />        
         </Link>
         
