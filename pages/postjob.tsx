@@ -9,7 +9,7 @@ export const getStaticProps = async() =>{
     apiVersion: '2022-11-15',});
 
     const {data: prices} = await stripe.prices.list();
-    const plans = await Promise.all(prices.map(async(price)=>{
+    const plans = await Promise.all(prices.map(async(price :any)=>{
         const product = await stripe.products.retrieve(price.product);
         return{
             id: price.id,
