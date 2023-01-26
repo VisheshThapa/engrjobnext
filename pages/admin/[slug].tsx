@@ -11,6 +11,8 @@ import { useForm, useFormState } from 'react-hook-form';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
+
+
 export default function AdminPostEdit(props: any) {
 
   return (
@@ -28,7 +30,7 @@ function JobManager() {
   const { session } = useContext(UserContext)
   console.log('session', session?.user.id)
   const [isLoading, setLoading] = useState(false)
-  const [jobs, setJobs] = useState(null)
+  const [jobs, setJobs] = useState<any | null>(null)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -78,7 +80,7 @@ function JobManager() {
   );
 }
 
-function JobForm( {defaultValues,jobRef,preview} ) {
+function JobForm(defaultValues: any, jobRef: any, preview: any ) {
   const { register, handleSubmit, reset, watch, formState: { errors }, control } = useForm({ defaultValues, mode: 'onChange' });
 
   const { isValid, isDirty } = useFormState({
