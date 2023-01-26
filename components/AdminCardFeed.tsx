@@ -1,50 +1,17 @@
 import {Box, Grid, Avatar, CardSection} from '@mantine/core'
 import Link from 'next/link';
 import internal from 'stream';
-
-interface JobsDataProp {
-  jobsData: {
-    jobs:[{
-    id: number;
-    city: string;
-    country: string;
-    company: string;
-    createdAt: string;
-    title: string;
-    link: string;
-    logo: string;
-    province: string;
-    tags: string[];
-    updatedAt: string;
-    published: boolean;
-    }]
-  };
-};
-
-interface JobProp {
-  job: {
-    id: number;
-    city: string;
-    country: string;
-    company: string;
-    createdAt: string;
-    title: string;
-    link: string;
-    logo: string;
-    province: string;
-    tags: string[];
-    updatedAt: string;
-    published: boolean;
-  }
-};
+import {JobProp} from '../pages/index'
 
 
-export default function AdminCardFeed({jobsData}: JobsDataProp){
-  return  (<>{jobsData ? jobsData.jobs.map((job) => <JobCard job = {job} key = {job.id}/> ) : null}</>);
+
+export default function AdminCardFeed(props: {jobsData: JobProp[]}){
+  return  (<>{props.jobsData ? props.jobsData?.map((job) => <JobCard job = {job} key = {job.id}/> ) : null}</>);
 }
 
 
-function JobCard({job}: JobProp){
+function JobCard(props: {job: JobProp}){
+  const job = props.job
     return(
 <div className="flex flex-col gap-2 mt-5 ...">
 <div  className=" bg-orange-100			mx-auto max-h-24 shadow-gray-100 w-full max-w-screen-lg flex flex-col sm:flex-row gap-2 sm:items-center justify-between px-5 py-4 rounded-md">
@@ -91,7 +58,7 @@ function JobCard({job}: JobProp){
             </button>
           </Link>
 
-          {job.published ? <p className="text-emerald-800	text-center">Live</p> : <p className="text-danger">Unpublished</p>}
+          {job.is_published ? <p className="text-emerald-800	text-center">Live</p> : <p className="text-danger">Unpublished</p>}
         
 
 

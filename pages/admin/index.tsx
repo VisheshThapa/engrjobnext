@@ -9,14 +9,14 @@ import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import toast from 'react-hot-toast';
 import { encode } from 'punycode';
 import { redirect, useNavigate } from "react-router-dom";
-
+import { JobProp } from '../../pages/index';
 
 export default function AdminPostsPage(props: any) {
   console.log('Render')
   const { session } = useContext(UserContext)
   console.log('session', session?.user.id)
   const [isLoading, setLoading] = useState(false)
-  const [jobs, setJobs] = useState<any | null>(null)
+  const [jobs, setJobs] = useState<JobProp[]>([])
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function AdminPostsPage(props: any) {
   }, [session]) 
 
   async function getData(){
-    const {data} = await supabase.from("job").select("*").eq('user_id', session?.user.id);
+    const {data} : any = await supabase.from("job").select("*").eq('user_id', session?.user.id);
     console.log(data);
     setJobs(data);
     }
