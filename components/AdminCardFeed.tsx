@@ -40,7 +40,7 @@ interface JobProp {
 
 
 export default function AdminCardFeed({jobsData}: JobsDataProp){
-  return jobsData ? jobsData.jobs.map((job) => <JobCard job = {job} key = {job.id}/>) : null;
+  return  (<>{jobsData ? jobsData.jobs.map((job) => <JobCard job = {job} key = {job.id}/> ) : null}</>);
 }
 
 

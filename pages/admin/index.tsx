@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import {supabase} from '../../lib/supabase'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import kebabCase from 'lodash.kebabcase';
 import toast from 'react-hot-toast';
 import { encode } from 'punycode';
 import { redirect, useNavigate } from "react-router-dom";
@@ -17,7 +16,7 @@ export default function AdminPostsPage(props: any) {
   const { session } = useContext(UserContext)
   console.log('session', session?.user.id)
   const [isLoading, setLoading] = useState(false)
-  const [jobs, setJobs] = useState(null)
+  const [jobs, setJobs] = useState<any | null>(null)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
