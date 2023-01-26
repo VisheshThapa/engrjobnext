@@ -4,7 +4,6 @@ import { Chip, Button} from '@mantine/core';
 import { firestore, postToJSON } from '../lib/firebase';
 import CardFeed from '../components/CardFeed';
 import { supabase } from '../lib/supabase';
-import { Job } from '@prisma/client';
 
 export interface JobProp {
     id: number;
