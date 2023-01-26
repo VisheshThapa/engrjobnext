@@ -8,7 +8,7 @@ import { supabase } from '../lib/supabase';
 
 const LIMIT = 1;
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps() {
   const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
 
   
