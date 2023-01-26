@@ -12,7 +12,19 @@ import { redirect, useNavigate } from "react-router-dom";
 import { JobProp } from '../../pages/index';
 
 export default function AdminPostsPage(props: any) {
-  console.log('Render')
+  
+  return (
+    <main>
+      <AuthCheck>
+        <JobList/>
+      </AuthCheck>
+    </main>
+  );
+}
+
+function JobList() {
+
+ console.log('Render')
   const { session } = useContext(UserContext)
   console.log('session', session?.user.id)
   const [isLoading, setLoading] = useState(false)
@@ -35,29 +47,8 @@ export default function AdminPostsPage(props: any) {
     }
 
   if (isLoading) return (<AuthCheck><p>Loading...</p></AuthCheck>)
-  if (!jobs) return <p>No profile data</p>
-  
-  return (
-    <main>
-      <AuthCheck>
-        <JobList jobs = {jobs} />
-      </AuthCheck>
-    </main>
-  );
-}
+  if (jobs.length == 0) return (<p>No profile data</p>)
 
-function JobList(jobs: any) {
-  // const ref = firestore.collection('users').doc(auth.currentUser.uid).collection('posts');
-  // const query = ref.orderBy('createdAt');
-  
-  /*
-  const ref = collection(getFirestore(), 'users', auth.currentUser.uid, 'jobs')
-  const jobQuery = query(ref, orderBy('createdAt'))
-
-  const [querySnapshot] = useCollection(jobQuery);
-
-  const jobs = querySnapshot?.docs.map((doc) => doc.data());
-  */
   return (
     <>
       <h1>Manage your Posts</h1>

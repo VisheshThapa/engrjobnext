@@ -6,7 +6,7 @@ import {JobProp} from '../pages/index'
 
 
 export default function AdminCardFeed(props: {jobsData: JobProp[]}){
-  return  (<>{props.jobsData ? props.jobsData?.map((job) => <JobCard job = {job} key = {job.id}/> ) : null}</>);
+  return  (<>{props.jobsData ? props.jobsData?.map((job) => <JobCard job = {job} key = {job.id}/> ) : <p color = "White"> No posts </p>}</>);
 }
 
 

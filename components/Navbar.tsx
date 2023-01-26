@@ -93,7 +93,7 @@ const links = [{
 
     {
       "link": "/enter",
-      "label": "Enter"
+      "label": "Login"
     },
   
   ]
@@ -157,19 +157,24 @@ export default function Navbar() {
         {session?.user && (
           <>
             
-              <Link href="/admin" className={cx(classes.link, { [classes.linkActive]: active === '/admin' })}>
+              <Link href="/admin" className={cx(classes.link, { [classes.linkActive]: active === '/admin' })}
+              onClick={(event) => {
+        
+                setActive('/admin');
+                close();
+              }}
+              >
                     Admin
               </Link>
 
               <Link href={`/${session?.user}`}>
-                <p> User Settings </p>
+                  User Settings
               </Link>
             
           </>
         )}
 
         {/* user is not signed OR has not created username */}
-        {session?.user ? <UserMenu /> : <Login />}
 
 
         
