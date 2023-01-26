@@ -19,13 +19,13 @@ interface JobsDataProp {
 }
 
 
-export default function CardFeed({jobsData}: JobsDataProp, admin : any){
-  return jobsData ? jobsData.map((job) => <JobCard job = {job} key = {job.id} admin ={admin}/>) : null;
+export default function CardFeed({jobsData}: JobsDataProp){
+  return jobsData ? jobsData.map((job) => <JobCard job = {job} key = {job.id}/>) : null;
 }
 
 
 
-function JobCard({job}: JobsDataProp, admin = false){
+function JobCard({job}: JobsDataProp){
 
     return(
 

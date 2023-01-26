@@ -40,11 +40,11 @@ interface JobProp {
 
 
 export default function AdminCardFeed({jobsData}: JobsDataProp, admin : any){
-  return jobsData ? jobsData.jobs.map((job) => <JobCard job = {job} key = {job.id} admin ={admin}/>) : null;
+  return jobsData ? jobsData.jobs.map((job) => <JobCard job = {job} key = {job.id}/>) : null;
 }
 
 
-function JobCard({job}: JobProp, admin = false){
+function JobCard({job}: JobProp){
     return(
 <div className="flex flex-col gap-2 mt-5 ...">
 <div  className=" bg-orange-100			mx-auto max-h-24 shadow-gray-100 w-full max-w-screen-lg flex flex-col sm:flex-row gap-2 sm:items-center justify-between px-5 py-4 rounded-md">
@@ -81,9 +81,7 @@ function JobCard({job}: JobProp, admin = false){
 
         </div>
   <div>
-    
-    {admin && (
-        <>
+
           <Link href={`/admin/${job.id}`}>
             <button className="bg-green-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center">Edit
             
@@ -94,8 +92,6 @@ function JobCard({job}: JobProp, admin = false){
           </Link>
 
           {job.published ? <p className="text-emerald-800	text-center">Live</p> : <p className="text-danger">Unpublished</p>}
-        </>
-      )}
         
 
 
