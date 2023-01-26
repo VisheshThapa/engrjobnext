@@ -1,49 +1,17 @@
 import {Box, Grid, Avatar, CardSection} from '@mantine/core'
-interface JobsDataProp {
-  jobsData: {
-    jobs:[{
-    id: number;
-    city: string;
-    country: string;
-    company: string;
-    createdAt: string;
-    title: string;
-    link: string;
-    logo: string;
-    province: string;
-    tags: string[];
-    updatedAt: string;
-    published: boolean;
-    }]
-  };
-};
-
-interface JobProp {
-  job: {
-    id: number;
-    city: string;
-    country: string;
-    company: string;
-    createdAt: string;
-    title: string;
-    link: string;
-    logo: string;
-    province: string;
-    tags: string[];
-    updatedAt: string;
-    published: boolean;
-  }
-};
+import {JobProp} from '../pages/index'
 
 
-export default function CardFeed({jobsData}: JobsDataProp){
-  return (<>{jobsData ? jobsData?.jobs?.map((job) => <JobCard job = {job} key = {job.id}/>) : null}</>);
+
+export default function CardFeed(props: {jobsData: JobProp[]}){
+  
+  return (<>{props.jobsData ? props.jobsData?.map((job) => <JobCard job = {job} key = {job.id}/>) : null}</>);
 }
 
 
 
-function JobCard({job}: JobProp){
-
+function JobCard(props: {job: JobProp}){
+  const job = props.job
     return(
 
 <div  className=" max-h-fit flex flex-col gap-1 mt-2 ...">

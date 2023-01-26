@@ -4,6 +4,24 @@ import { Chip, Button} from '@mantine/core';
 import { firestore, postToJSON } from '../lib/firebase';
 import CardFeed from '../components/CardFeed';
 import { supabase } from '../lib/supabase';
+import { Job } from '@prisma/client';
+
+export interface JobProp {
+    id: number;
+    city: string;
+    country: string;
+    company: string;
+    created_at: string;
+    title: string;
+    link: string;
+    logo: string;
+    province: string;
+    tags: string[];
+    updated_at: string;
+    is_published: boolean;
+    user_id: number;
+    
+};
 
 
 const LIMIT = 1;
@@ -34,13 +52,13 @@ export default function Home(props: any) {
   console.log(props.jobs)
   const [loading, setLoading] = useState(false);
   const [jobsEnd, setJobsEnd] = useState(false);
-  const [jobsData, setJobData] = useState(props.jobs);
+  const [jobsData, setJobData] = useState<JobProp[]>(props.jobs);
 
   const getMoreJobs = async () => {
     setLoading(true);
-    const last = jobsData[jobsData.length - 1];
+    const last = jobsData?[jobsData.length - 1] : null;
     console.log("Last",last)
-    const {data: newJobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
+    const {data: newJobs } : any = await supabase.from('job').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
     
     /** 
     const ref = collectionGroup(getFirestore(), 'jobs');
@@ -79,7 +97,7 @@ export default function Home(props: any) {
           <Chip value="S">S</Chip>
       </Chip.Group> */}
 
-      {loading ? <CardFeed jobsData={jobsData}></CardFeed> : null}
+      <CardFeed jobsData={jobsData}></CardFeed>
     <div className="grid w-screen place-items-center mt-7 ">
       {!loading && !jobsEnd && <Button leftIcon={<IconDatabase size={14} />} className = "bg-blue-500" onClick = {getMoreJobs}> Load More </Button>}
 
