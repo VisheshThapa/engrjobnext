@@ -80,7 +80,7 @@ function JobManager() {
   );
 }
 
-function JobForm(defaultValues: any, jobRef: any, preview: any ) {
+function JobForm( {defaultValues, jobRef, preview,} : any) {
   const { register, handleSubmit, reset, watch, formState: { errors }, control } = useForm({ defaultValues, mode: 'onChange' });
 
   const { isValid, isDirty } = useFormState({
@@ -115,7 +115,7 @@ function JobForm(defaultValues: any, jobRef: any, preview: any ) {
           
         ></textarea>
 
-        {errors.content && <p className="text-danger">{errors.content.message}</p>}
+        {errors.content && <p className="text-danger">Error</p>}
 
         <fieldset>
           <input className={styles.checkbox} type="checkbox" {...register("published")} />
