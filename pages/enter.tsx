@@ -22,7 +22,7 @@ const actionCodeSettings = {
 
 
 
-export default function Enter(props) {
+export default function Enter(props: any) {
   const { session } = useContext(UserContext);
   const [authMode, setAuthMode] = useState<"sign_in" | "sign_up">("sign_in");
   const [email, setEmail] = useState('');
