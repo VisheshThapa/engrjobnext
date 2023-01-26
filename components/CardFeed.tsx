@@ -1,6 +1,4 @@
 import {Box, Grid, Avatar, CardSection} from '@mantine/core'
-import kebabCase from 'lodash.kebabcase';
-import toast from 'react-hot-toast';
 
 interface JobsDataProp {
   jobsData: {
