@@ -37,12 +37,12 @@ interface JobProp {
 
 
 export default function CardFeed({jobsData}: JobsDataProp){
-  return jobsData ? jobsData.map((job) => <JobCard job = {job} key = {job.id}/>) : null;
+  return jobsData ? jobsData.jobs.map((job) => <JobCard job = {job} key = {job.id}/>) : null;
 }
 
 
 
-function JobCard({job}: JobsDataProp){
+function JobCard({job}: JobProp){
 
     return(
 
