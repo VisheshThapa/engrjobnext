@@ -19,11 +19,11 @@ if (isSignInWithEmailLink(auth, window.location.href)) {
   // the sign-in operation.
   // Get the email if available. This should be available if the user completes
   // the flow on the same device where they started it.
-  let email = window.localStorage.getItem('emailForSignIn');
+  let email = window.localStorage.getItem('emailForSignIn')!;
   if (!email) {
     // User opened the link on a different device. To prevent session fixation
     // attacks, ask the user to provide the associated email again. For example:
-    email = window.prompt('Please provide your email for confirmation');
+    email = window.prompt('Please provide your email for confirmation')!;
   }
   // The client SDK will parse the code from the link for you.
   signInWithEmailLink(auth, email, window.location.href)
