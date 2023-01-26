@@ -9,7 +9,7 @@ import { UserContext } from '../lib/context';
 import Image from 'next/image'
 import Login from "./Login";
 import UserMenu from "./UserMenu";
-import logo from '../public/turtlelogo.png'
+import logo from '../public/otter_inv_logo.png'
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
@@ -127,9 +127,10 @@ export default function Navbar() {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
-        <Image src = {logo} alt = 'logo image' width = '55' height = '55' />
-        <h3 className='mx-0'>Otter Inventor</h3>
-        
+
+        <Link href="/home" className={cx(classes.link, { [classes.linkActive]: active === '/home' })}>
+            <Image src = {logo} alt = 'logo image' width = '55' height = '55' />        
+        </Link>
         
         
         <Group spacing={5} className={classes.links}>
@@ -157,7 +158,7 @@ export default function Navbar() {
               </Link>
 
               <Link href={`/${session?.user}`}>
-                <Image src= '/../public/turtlelogo.png' alt = 'Profile Picture' width = '50' height='50' />
+                <p> User Settings </p>
               </Link>
             
           </>
