@@ -79,7 +79,7 @@ export default function Home(props: any) {
           <Chip value="S">S</Chip>
       </Chip.Group> */}
 
-      <CardFeed jobsData={jobsData}></CardFeed>
+      {loading && <CardFeed jobsData={jobsData}></CardFeed>}
     <div className="grid w-screen place-items-center mt-7 ">
       {!loading && !jobsEnd && <Button leftIcon={<IconDatabase size={14} />} className = "bg-blue-500" onClick = {getMoreJobs}> Load More </Button>}
 
