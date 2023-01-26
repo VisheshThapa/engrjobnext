@@ -59,7 +59,7 @@ export default function Home(props: any) {
     setJobData(jobsData.concat(newJobs));
     setLoading(false);
 
-    if (newJobs.length < LIMIT) {
+    if (newJobs!.length < LIMIT) {
       setJobsEnd(true);
       console.log(jobsEnd)
     }
