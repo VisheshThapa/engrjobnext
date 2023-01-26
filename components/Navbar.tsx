@@ -126,7 +126,7 @@ export default function Navbar() {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
-        <Image src = '/../public/turtlelogo.png' alt = 'logo image' width = '55' height = '55' />
+        <Image src = '../public/turtlelogo.png' alt = 'logo image' width = '55' height = '55' />
         <h3 className='mx-0'>Turtle Engineering</h3>
         
         

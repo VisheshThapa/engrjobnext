@@ -1,9 +1,9 @@
 import Stripe from 'stripe';
 import {supabase} from '../../lib/supabase';
-const stripe = new Stripe(process.env.STRIPE_SECRECT_KEY);
+const stripe = new Stripe('sk_test_51MJ9gWLI4yA1TYsecmvWxvsQ2HHDhlVI44RRUgeoSvrDN7jFmwyI5orixURe10HIlzG1YHDch34mkCbzH1OjAi0s00FsCve5EI');
 
 const handler = async (req, res) => {
-  if(req.query.API_ROUTE_SECRET !== process.env.API_ROUTE_SECRET){
+  if(req.query.API_ROUTE_SECRET !== "559fe89721f1d6a4cac9b4f07466fc01ef40b9fdaa0d81133281f46a75fe0d63"){
     return res.status(401).send('You are not authorized to call this API');
   }
 
