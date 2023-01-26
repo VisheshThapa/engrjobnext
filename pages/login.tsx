@@ -1,7 +1,7 @@
 import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import { useEffect } from "react";
 
-export default function (){
+export default function Login (){
   useEffect(()=>{signInEmail()}, []);
   return(
     <>
