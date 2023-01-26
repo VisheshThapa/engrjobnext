@@ -1,20 +1,39 @@
 import {Box, Grid, Avatar, CardSection} from '@mantine/core'
-
 interface JobsDataProp {
   jobsData: {
+    jobs:[{
+    id: number;
     city: string;
     country: string;
     company: string;
     createdAt: string;
-    slug: string,
     title: string;
     link: string;
     logo: string;
     province: string;
     tags: string[];
     updatedAt: string;
+    published: boolean;
+    }]
   };
-}
+};
+
+interface JobProp {
+  job: {
+    id: number;
+    city: string;
+    country: string;
+    company: string;
+    createdAt: string;
+    title: string;
+    link: string;
+    logo: string;
+    province: string;
+    tags: string[];
+    updatedAt: string;
+    published: boolean;
+  }
+};
 
 
 export default function CardFeed({jobsData}: JobsDataProp){
