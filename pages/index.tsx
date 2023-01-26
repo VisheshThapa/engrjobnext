@@ -23,7 +23,7 @@ export interface JobProp {
 };
 
 
-const LIMIT = 1;
+const LIMIT = 10;
 
 export async function getServerSideProps() {
   const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);

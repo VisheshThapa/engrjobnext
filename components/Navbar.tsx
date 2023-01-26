@@ -9,6 +9,7 @@ import { UserContext } from '../lib/context';
 import Image from 'next/image'
 import Login from "./Login";
 import UserMenu from "./UserMenu";
+import logo from '../public/turtlelogo.png'
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
@@ -126,8 +127,8 @@ export default function Navbar() {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
-        <Image src = '../public/turtlelogo.png' alt = 'logo image' width = '55' height = '55' />
-        <h3 className='mx-0'>Turtle Engineering</h3>
+        <Image src = {logo} alt = 'logo image' width = '55' height = '55' />
+        <h3 className='mx-0'>Otter Inventor</h3>
         
         
         
