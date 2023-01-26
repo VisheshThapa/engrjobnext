@@ -1,9 +1,9 @@
-import HeaderResponsive from "./HeaderResponsive"
+import Navbar from "./Navbar"
 
 export default function Layout({ children}:{children:any}) {
   return (
     <>
-      <HeaderResponsive/>
+      <Navbar/>
       <main >{children}</main>
     </>
   )

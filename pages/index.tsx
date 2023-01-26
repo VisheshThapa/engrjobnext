@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import HeaderResponsive from '../components/HeaderResponsive';
-import Table  from '../components/Table'
-import { Chip } from '@mantine/core';
-import Loader from '../components/Loader';
+import { IconDatabase } from '@tabler/icons';
+import { Chip, Button} from '@mantine/core';
 import { firestore, postToJSON } from '../lib/firebase';
-import { Timestamp, query, where, orderBy, limit, collectionGroup, getDocs } from 'firebase/firestore';
-import Card from '../components/Card';
-const LIMIT = 10;
+import CardFeed from '../components/CardFeed';
+import { supabase } from '../lib/supabase';
+
+
+const LIMIT = 1;
 
 export async function getServerSideProps(context: any) {
-  const ref = collectionGroup(firestore, 'jobs');
+  const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
+
+  
+  /** Firestore code
+  const ref = collectionGroup(getFirestore(), 'jobs');
   const jobsQuery = query(
     ref,
     where('published', '==', true),
@@ -17,6 +21,9 @@ export async function getServerSideProps(context: any) {
     limit(LIMIT),
   )
   const jobs = (await getDocs(jobsQuery)).docs.map(postToJSON);
+ 
+  **/
+
   return {
     props: { jobs }, // will be passed to the page component as props
   };
@@ -24,49 +31,62 @@ export async function getServerSideProps(context: any) {
 
 
 export default function Home(props: any) {
-
-  const [chipValue, setChipValue] = useState([]);
-  
+  console.log(props.jobs)
+  const [loading, setLoading] = useState(false);
+  const [jobsEnd, setJobsEnd] = useState(false);
   const [jobsData, setJobData] = useState(props.jobs);
-  const [jobsDataInital, setJobDataInital] = useState(props.jobs);
 
-  const filterJobs = () => {
-    const filteredJobs = jobsDataInital.filter(data => data.tags.some(item => chipValue.includes(item)))    
-    setJobData(filteredJobs)
-   }
+  const getMoreJobs = async () => {
+    setLoading(true);
+    const last = jobsData[jobsData.length - 1];
+    console.log("Last",last)
+    const {data: newJobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
+    
+    /** 
+    const ref = collectionGroup(getFirestore(), 'jobs');
+      const postsQuery = query(
+        ref,
+        where('published', '==', true),
+        orderBy('createdAt', 'desc'),
+        startAfter(cursor),
+        limit(LIMIT),
+      )
+    
+    const newJobs = (await getDocs(postsQuery)).docs.map((doc) => doc.data());
+    **/
+    console.log('NewJobs',newJobs)
 
+    setJobData(jobsData.concat(newJobs));
+    setLoading(false);
 
+    if (newJobs.length < LIMIT) {
+      setJobsEnd(true);
+      console.log(jobsEnd)
+    }
+    console.log(jobsEnd)
+  };
 
-  useEffect(() => {
-   // adding event listeners on mount here
-   
-   filterJobs();
-
-   if(chipValue.length === 0){
-    setJobData(jobsDataInital);
-   }
-   
-  //  return () => {
-  //      // cleaning up the listeners here
-  //  }
-}, [chipValue]); 
 
   return (
-    <div>
-        <Loader show />
+    <main>
       
 
 
-      <Chip.Group position="center" multiple mt={15} value={chipValue} onChange={setChipValue}>
+      {/* <Chip.Group position="center" multiple mt={15} value={chipValue} >
           <Chip value="Mechanical">Mechanical</Chip>
           <Chip value="Civil">Civil</Chip>
           <Chip value="Construction">Construction</Chip>
           <Chip value="S">S</Chip>
-      </Chip.Group>
+      </Chip.Group> */}
 
-      
-      <Card jobsData={jobsData}></Card>
-      
+      <CardFeed jobsData={jobsData}></CardFeed>
+    <div className="grid w-screen place-items-center mt-7 ">
+      {!loading && !jobsEnd && <Button leftIcon={<IconDatabase size={14} />} className = "bg-blue-500" onClick = {getMoreJobs}> Load More </Button>}
+
+      {loading ? <Button leftIcon={<IconDatabase size={14} />} className = "bg-blue-500" onClick = {getMoreJobs} loading> Load More </Button>: null}
+
+      {jobsEnd && 'You have reached the end!'}
     </div>
+    </main>
   )
 }

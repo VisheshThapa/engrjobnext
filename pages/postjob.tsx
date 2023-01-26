@@ -1,11 +1,57 @@
-
+import Stripe from 'stripe'
 
 import { Textarea } from '@mantine/core';
+import { stringify } from 'querystring';
+import { PlanetScale } from 'planetscale';
 
-export default function PostJob(){
+export const getStaticProps = async() =>{
+    const stripe = new Stripe('sk_test_51MJ9gWLI4yA1TYsecmvWxvsQ2HHDhlVI44RRUgeoSvrDN7jFmwyI5orixURe10HIlzG1YHDch34mkCbzH1OjAi0s00FsCve5EI', {
+    apiVersion: '2022-11-15',});
+
+    const {data: prices} = await stripe.prices.list();
+    const plans = await Promise.all(prices.map(async(price)=>{
+        const product = await stripe.products.retrieve(price.product);
+        return{
+            id: price.id,
+            name: product.name,
+            price: price.unit_amount,
+            currency: price.currency
+        }
+    }))
+  return{
+    props:{
+        plans,
+    },
+  }
+}
+
+export default function PostJob({plans}: any){
 
 
     return(
+        <>
+        <Post></Post>
+        <div>
+            {
+              plans.map((plan: any)=>(
+                <div key = {plan.id}>
+                    <h2>{plan.name}</h2>
+                    <p>
+                        { '$'+ plan.price/100 + '.00'}
+                    </p>
+                </div>
+              ))  
+            }
+        </div>
+        </>
+    )
+
+}
+
+function Post(){
+    return(
+        
+        <>
         <div>
             
             <Textarea
@@ -37,6 +83,6 @@ export default function PostJob(){
             />
 
         </div>
-    )
-
+        </>
+    );
 }

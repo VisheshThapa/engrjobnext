@@ -3,11 +3,12 @@ import { createStyles, Header, Container, Group, Burger, Paper, Transition } fro
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantine/ds';
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { UserContext } from '../lib/context';
-
+import Image from 'next/image'
+import Login from "./Login";
+import UserMenu from "./UserMenu";
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
@@ -85,14 +86,6 @@ const links = [{
       "label": "Home"
     },
     {
-      "link": "/checkout",
-      "label": "Checkout"
-    },
-    {
-      "link": "/learn",
-      "label": "Learn"
-    },
-    {
       "link": "/postjob",
       "label": "Post a Job"
     },
@@ -105,8 +98,8 @@ const links = [{
   ]
 
 
-export default function HeaderResponsive() {
-  const { user, username } = useContext(UserContext)
+export default function Navbar() {
+  const { session, profile } = useContext(UserContext)
 
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
@@ -133,13 +126,16 @@ export default function HeaderResponsive() {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
-        <MantineLogo size={28} />
-
+        <Image src = '/../public/turtlelogo.png' alt = 'logo image' width = '55' height = '55' />
+        <h3 className='mx-0'>Turtle Engineering</h3>
+        
+        
+        
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
 
-        <ActionIcon
+        {/* <ActionIcon
           variant="outline"
           color={dark ? 'yellow' : 'blue'}
           onClick={() => toggleColorScheme()}
@@ -149,32 +145,25 @@ export default function HeaderResponsive() {
 
 
           {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
-        </ActionIcon>
+        </ActionIcon> */}
 
         {/* user is signed-in and has username */}
-        {username && (
+        {session?.user && (
           <>
-            <li className="push-left">
-              <Link href="/admin">
-                <button className="btn-blue">Write Posts</button>
+            
+              <Link href="/admin" className={cx(classes.link, { [classes.linkActive]: active === '/admin' })}>
+                    Admin
               </Link>
-            </li>
-            <li>
-              <Link href={`/${username}`}>
-                <img src={user?.photoURL} />
+
+              <Link href={`/${session?.user}`}>
+                <Image src= '/../public/turtlelogo.png' alt = 'Profile Picture' width = '50' height='50' />
               </Link>
-            </li>
+            
           </>
         )}
 
         {/* user is not signed OR has not created username */}
-        {!username && (
-          <li>
-            <Link href="/enter">
-              <button className="btn-blue">Log in</button>
-            </Link>
-          </li>
-        )}
+        {session?.user ? <UserMenu /> : <Login />}
 
 
         

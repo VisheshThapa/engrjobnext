@@ -1,29 +1,71 @@
 import { auth, firestore, googleAuthProvider } from '../lib/firebase';
 import { doc, writeBatch, getDoc, getFirestore } from 'firebase/firestore';
-import { signInWithPopup, signInAnonymously, signOut } from 'firebase/auth';
+import { signInWithPopup, signInAnonymously } from 'firebase/auth';
 import { UserContext } from '../lib/context';
-
+import { supabase } from '../lib/supabase';
 import { useEffect, useState, useCallback, useContext } from 'react';
-import debounce from 'lodash.debounce';
+import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
+import { getAuth, sendSignInLinkToEmail } from "firebase/auth";
+import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
+import { send } from 'process';
+import Login from '../components/Login';
+
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: 'http://localhost:3000/login',
+  // This must be true.
+  handleCodeInApp: true,
+};
+
+
+
+
 
 export default function Enter(props) {
-  const { user, username } = useContext(UserContext);
-
+  const { session } = useContext(UserContext);
+  const [authMode, setAuthMode] = useState<"sign_in" | "sign_up">("sign_in");
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   // 1. user signed out <SignInButton />
-  // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
+  console.log('V')
   return (
     <main>
-     
-      {user ? !username ? <UsernameForm /> : <SignOutButton /> : <SignInButton />}
+      {session ?  <SignOutButton />: <Auth
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                className: {
+                  container: "login-form-container",
+                  label: "login-form-label",
+                  button: "login-form-button",
+                  input: "login-form-input",
+                },
+              }}
+              view={authMode}
+            />}
+
+      
+      
+    
     </main>
   );
 }
 
+
+
+
+
 // Sign in with Google button
 function SignInButton() {
   const signInWithGoogle = async () => {
-    await signInWithPopup(auth, googleAuthProvider)
+    await supabase.auth.signInWithOtp({
+    email: 'kizieto@gmail.com',
+    options: {
+      emailRedirectTo: 'https://localhost:3000/',
+    },
+  })
   };
 
   return (
@@ -31,114 +73,15 @@ function SignInButton() {
       <button className="btn-google" onClick={signInWithGoogle}>
         <img src={'/google.svg'} width="30px" /> Sign in with Google
       </button>
-      <button onClick={() => signInAnonymously(auth)}>
-        Sign in Anonymously
-      </button>
     </>
   );
 }
 
 // Sign out button
 function SignOutButton() {
-  return <button onClick={() => signOut(auth)}>Sign Out</button>;
-}
-
-// Username form
-function UsernameForm() {
-  const [formValue, setFormValue] = useState('');
-  const [isValid, setIsValid] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const { user, username } = useContext(UserContext);
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    // Create refs for both documents
-    const userDoc = doc(getFirestore(), 'users', user.uid);
-    const usernameDoc = doc(getFirestore(), 'usernames', formValue);
-
-    // Commit both docs together as a batch write.
-    const batch = writeBatch(getFirestore());
-    batch.set(userDoc, { username: formValue, photoURL: user.photoURL, displayName: user.displayName });
-    batch.set(usernameDoc, { uid: user.uid });
-
-    await batch.commit();
+  const signOut = async () => {
+    await supabase.auth.signOut()
   };
 
-  const onChange = (e) => {
-    // Force form value typed in form to match correct format
-    const val = e.target.value.toLowerCase();
-    const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-
-    // Only set form value if length is < 3 OR it passes regex
-    if (val.length < 3) {
-      setFormValue(val);
-      setLoading(false);
-      setIsValid(false);
-    }
-
-    if (re.test(val)) {
-      setFormValue(val);
-      setLoading(true);
-      setIsValid(false);
-    }
-  };
-
-  //
-
-  useEffect(() => {
-    checkUsername(formValue);
-  }, [formValue]);
-
-  // Hit the database for username match after each debounced change
-  // useCallback is required for debounce to work
-  const checkUsername = useCallback(
-    debounce(async (username) => {
-      if (username.length >= 3) {
-        const ref = doc(getFirestore(), 'usernames', username);
-        const snap = await getDoc(ref);
-        console.log('Firestore read executed!', snap.exists());
-        setIsValid(!snap.exists());
-        setLoading(false);
-      }
-    }, 500),
-    []
-  );
-
-  return (
-    !username && (
-      <section>
-        <h3>Choose Username</h3>
-        <form onSubmit={onSubmit}>
-          <input name="username" placeholder="myname" value={formValue} onChange={onChange} />
-          <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
-          <button type="submit" className="btn-green" disabled={!isValid}>
-            Choose
-          </button>
-
-          <h3>Debug State</h3>
-          <div>
-            Username: {formValue}
-            <br />
-            Loading: {loading.toString()}
-            <br />
-            Username Valid: {isValid.toString()}
-          </div>
-        </form>
-      </section>
-    )
-  );
-}
-
-function UsernameMessage({ username, isValid, loading }) {
-  if (loading) {
-    return <p>Checking...</p>;
-  } else if (isValid) {
-    return <p className="text-success">{username} is available!</p>;
-  } else if (username && !isValid) {
-    return <p className="text-danger">That username is taken!</p>;
-  } else {
-    return <p></p>;
-  }
+  return <button onClick={() => signOut()}>Sign Out</button>;
 }

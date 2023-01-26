@@ -1,2 +1,5 @@
 import { createContext } from 'react';
-export const UserContext = createContext({ user: null, username: null });
+import { SupashipUserInfo} from "./use_session";
+
+
+export const UserContext = createContext<SupashipUserInfo>({session: null, profile: null, });
