@@ -7,12 +7,12 @@ const handler = async (req, res) =>{
         quantity: 1,
     }];
     const session = await stripe.checkout.sessions.create({
-    customer: "cus_NEqyRTQeWGqMQP",
-    mode: "subscription",
+    customer_creation: "always",
+    mode: "payment",
     payment_method_types: ["card"],
     line_items: lineItems,
-    success_url: `${process.env.CLIENT_URL}/payment/success`,
-    cancel_url: `${process.env.CLIENT_URL}/payment/cancelled`,
+    success_url: 'http://localhost:3000/payment/success',
+    cancel_url: 'http://localhost:3000/payment/cancel',
   });
 
   res.send({
