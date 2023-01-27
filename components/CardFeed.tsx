@@ -15,19 +15,18 @@ function JobCard(props: {job: JobProp}){
     return(
 
 <div  className=" max-h-fit flex flex-col gap-1 mt-2 ...">
+  
 <div   className="max-h-fit	 bg-orange-100 mx-auto shadow-gray-100 w-full max-w-screen-lg flex flex-row sm:flex-row gap-2 items-center justify-between px-5 py-4 rounded-md">
   
   
-<div className="flex flex-row content-center ... max-w-[40%] min-w-[35%]">
+<div className="flex flex-row content-center ... max-w-[40%] min-w-[50%]">
     
     <Avatar size = "lg" className = "mr-3 my-auto" />
   
   <div className="justify-start text-left">  
-
-    <span className="text-purple-800 text-xs ">{job.company}</span>
     
     <h5 className="font-bold mt-px text-amber-800		">{job.title}</h5>
-    
+    <span className="text-purple-800 text-sm ">{job.company}</span>
     <div className="flex items-center gap-3 mt-2">
         <span className="bg-purple-100 text-purple-700 rounded-full px-3 py-1 text-xs">Full-time</span>
         <span className="text-slate-600 text-sm flex gap-1 items-center"> <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -41,7 +40,7 @@ function JobCard(props: {job: JobProp}){
     <div className = "self-center">
         {job.tags.map((tag: string | number, index: number) => (
             
-            <div key = {index} className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-stone-700 bg-orange-300 border border-orange-300 ">
+            <div key = {index} className="flex text-center justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-stone-700 bg-orange-300 border border-orange-300 ">
             <div className="text-xs font-normal leading-none max-w-full flex-initial">{tag}</div>
         </div>
             
@@ -63,6 +62,7 @@ function JobCard(props: {job: JobProp}){
 
 
   </div>
+  
  </div> 
 </div>  
     );

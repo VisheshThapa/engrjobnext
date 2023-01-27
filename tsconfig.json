@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/hooks.js", "lib/firebase.js", "pages/api/create-stripe-customer.js", "components/ImageUploader.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "lib/hooks.js", "pages/api/create-stripe-customer.js", "components/ImageUploader.jsx"],
   "exclude": ["node_modules"]
 }
