@@ -166,11 +166,13 @@ export default function Navbar() {
               >
                     Admin
               </Link>
-
+              
+              {/*
               <Link href={`/${session?.user}`}>
                   User Settings
               </Link>
-            
+              */
+            }
           </>
         )}
 

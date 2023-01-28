@@ -4,7 +4,7 @@ import { Chip, Button} from '@mantine/core';
 import { firestore, postToJSON } from '../lib/firebase';
 import CardFeed from '../components/CardFeed';
 import { supabase } from '../lib/supabase';
-
+import Head from 'next/head';
 export interface JobProp {
     id: number;
     city: string;
@@ -87,8 +87,6 @@ export default function Home(props: any) {
   return (
     <main className='overflow-hidden'>
       
-
-
       {/* <Chip.Group position="center" multiple mt={15} value={chipValue} >
           <Chip value="Mechanical">Mechanical</Chip>
           <Chip value="Civil">Civil</Chip>
