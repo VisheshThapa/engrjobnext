@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://otterinventor.com
+
+# Sitemaps
+Sitemap: https://otterinventor.com/sitemap.xml
