@@ -87,6 +87,7 @@ export default function Home(props: any) {
   return (
     <main className='overflow-hidden'>
       
+      
       {/* <Chip.Group position="center" multiple mt={15} value={chipValue} >
           <Chip value="Mechanical">Mechanical</Chip>
           <Chip value="Civil">Civil</Chip>
@@ -103,5 +104,6 @@ export default function Home(props: any) {
       {jobsEnd && 'You have reached the end!'}
     </div>
     </main>
+
   )
 }

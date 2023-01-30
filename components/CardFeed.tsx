@@ -1,6 +1,6 @@
 import {Box, Grid, Avatar, CardSection} from '@mantine/core'
 import {JobProp} from '../pages/index'
-
+import Image from 'next/image'
 
 
 export default function CardFeed(props: {jobsData: JobProp[]}){
@@ -21,7 +21,9 @@ function JobCard(props: {job: JobProp}){
   
 <div className="flex flex-row content-center ... max-w-[40%] min-w-[50%]">
     
-    <Avatar size = "lg" className = "mr-3 my-auto" />
+  {job.logo ? <Image src = {job.logo} className = "mr-3 my-auto rounded"  alt = 'logo image' width = '56' height = '56' /> : 
+   <div className = "mr-3 my-auto rounded w-[56px] h-[56px] border-4 border-orange-300/100 bg-orange-300 text-stone-700 text-xl flex justify-center items-center" >{job.company[0]}</div>
+   }
   
   <div className="justify-start text-left">  
     

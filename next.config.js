@@ -12,6 +12,9 @@ const nextConfig = {
         pathname: '/a/**',
       },
     ],
+
+    domains: ['ztdmxmmalbgustivfibe.supabase.co'],
+
   },
 }
 
