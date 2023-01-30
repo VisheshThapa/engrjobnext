@@ -29,7 +29,7 @@ export async function getServerSideProps(context: any) {
 
   context.res.setHeader(
         'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=59'
+        'public, s-maxage=10, stale-while-revalidate=120'
     )
 
   const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
