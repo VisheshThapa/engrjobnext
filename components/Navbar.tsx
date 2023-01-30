@@ -87,10 +87,6 @@ const links = [{
       "label": "Home"
     },
     {
-    "link": "/co-op",
-      "label": "Co-op"
-    },
-    {
       "link": "/postjobsoon",
       "label": "Post a Job"
     },
