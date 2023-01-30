@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { IconDatabase } from '@tabler/icons';
 import { Chip, Button} from '@mantine/core';
-import { firestore, postToJSON } from '../lib/firebase';
 import CardFeed from '../components/CardFeed';
 import { supabase } from '../lib/supabase';
-import Head from 'next/head';
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 export interface JobProp {
     id: number;
     city: string;
@@ -25,7 +25,13 @@ export interface JobProp {
 
 const LIMIT = 10;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
+
+  context.res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=59'
+    )
+
   const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
 
   
