@@ -32,7 +32,7 @@ export async function getServerSideProps(context: any) {
         'public, s-maxage=10, stale-while-revalidate=120'
     )
 
-  const {data: jobs} = await supabase.from('job_duplicate').select('*').order('created_at', { ascending: false }).limit(LIMIT);
+  const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
 
   
   /** Firestore code
@@ -63,7 +63,7 @@ export default function Home(props: any) {
     setLoading(true);
     const last = jobsData[jobsData.length - 1];
     console.log("Last",last)
-    const {data: newJobs } : any = await supabase.from('job_duplicate').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
+    const {data: newJobs } : any = await supabase.from('job').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
     
     /** 
     const ref = collectionGroup(getFirestore(), 'jobs');
