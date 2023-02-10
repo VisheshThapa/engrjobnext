@@ -86,10 +86,6 @@ const links = [{
       "link": "/",
       "label": "Home"
     },
-    {
-      "link": "/postjobsoon",
-      "label": "Post a Job"
-    },
 
     {
       "link": "/enter",
