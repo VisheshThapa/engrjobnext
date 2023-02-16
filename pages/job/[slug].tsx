@@ -21,7 +21,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (params: { slug: any }) => {
   console.log('Get static', params.slug)
   const { data: job } = await supabase
-    .from("job_duplicate")
+    .from("job")
     .select("*")
     .single();
 
