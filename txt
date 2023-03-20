@@ -1,0 +1,4 @@
+INSERT INTO private.keys (key, value) values ('MAILGUN_DOMAIN', 'sandbox0264db180b9e437484fa2c8102865ac1.mailgun.org');
+INSERT INTO private.keys (key, value) values ('MAILGUN_API_KEY', '34e5a979bbee6d571373e27cc4d3fc7d-ca9eeb88-3ac03ef8');
+INSERT INTO private.keys (key, value) values ('MAILGUN_WEBHOOK_URL', 
+    'https://ztdmxmmalbgustivfibe.supabase.co/rest/v1/rpc/mailgun_webhook?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0ZG14bW1hbGJndXN0aXZmaWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjUxMDI0MjcsImV4cCI6MTk4MDY3ODQyN30.bfoYHvxL-SpE0Pl_cdgrQvKGIjaXKFUAjDxHTR8eWdg');

@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { IconDatabase } from '@tabler/icons';
-import { Chip, Button} from '@mantine/core';
+import { Chip, Button } from '@mantine/core';
 import CardFeed from '../components/CardFeed';
 import { supabase } from '../lib/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-export interface JobProp {
-    id: number;
-    city: string;
-    country: string;
-    company: string;
-    created_at: string;
-    title: string;
-    link: string;
-    logo: string;
-    province: string;
-    tags: string[];
-    updated_at: string;
-    is_published: boolean;
-    company_jobpage: boolean,
-    user_id: number;
+// TODO: make a fortnite book 
 
-    
+export interface JobProp {
+  id: number;
+  city: string;
+  country: string;
+  company: string;
+  created_at: string;
+  title: string;
+  link: string;
+  logo: string;
+  province: string;
+  tags: string[];
+  updated_at: string;
+  is_published: boolean;
+  company_jobpage: boolean,
+  user_id: number;
+
+
 };
 
 
@@ -30,13 +32,13 @@ const LIMIT = 10;
 export async function getServerSideProps(context: any) {
 
   context.res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=120'
-    )
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=120'
+  )
 
-  const {data: jobs} = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
+  const { data: jobs } = await supabase.from('job').select('*').order('created_at', { ascending: false }).limit(LIMIT);
 
-  
+
   /** Firestore code
   const ref = collectionGroup(getFirestore(), 'jobs');
   const jobsQuery = query(
@@ -64,9 +66,9 @@ export default function Home(props: any) {
   const getMoreJobs = async () => {
     setLoading(true);
     const last = jobsData[jobsData.length - 1];
-    console.log("Last",last)
-    const {data: newJobs } : any = await supabase.from('job').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
-    
+    console.log("Last", last)
+    const { data: newJobs }: any = await supabase.from('job').select('*').order('created_at', { ascending: false }).lt('created_at', last.created_at).limit(LIMIT);
+
     /** 
     const ref = collectionGroup(getFirestore(), 'jobs');
       const postsQuery = query(
@@ -79,7 +81,7 @@ export default function Home(props: any) {
     
     const newJobs = (await getDocs(postsQuery)).docs.map((doc) => doc.data());
     **/
-    console.log('NewJobs',newJobs)
+    console.log('NewJobs', newJobs)
 
     setJobData(jobsData.concat(newJobs));
     setLoading(false);
@@ -94,8 +96,8 @@ export default function Home(props: any) {
 
   return (
     <main className='overflow-hidden'>
-      
-      
+
+
       {/* <Chip.Group position="center" multiple mt={15} value={chipValue} >
           <Chip value="Mechanical">Mechanical</Chip>
           <Chip value="Civil">Civil</Chip>
@@ -104,13 +106,13 @@ export default function Home(props: any) {
       </Chip.Group> */}
 
       <CardFeed jobsData={jobsData}></CardFeed>
-    <div className="grid w-screen place-items-center mt-7 ">
-      {!loading && !jobsEnd && <Button leftIcon={<IconDatabase size={14} />} className = "bg-blue-500" onClick = {getMoreJobs}> Load More </Button>}
+      <div className="grid w-screen place-items-center mt-7 ">
+        {!loading && !jobsEnd && <Button leftIcon={<IconDatabase size={14} />} className="bg-blue-500" onClick={getMoreJobs}> Load More </Button>}
 
-      {loading ? <Button leftIcon={<IconDatabase size={14} />} className = "bg-blue-500" onClick = {getMoreJobs} loading> Load More </Button>: null}
+        {loading ? <Button leftIcon={<IconDatabase size={14} />} className="bg-blue-500" onClick={getMoreJobs} loading> Load More </Button> : null}
 
-      {jobsEnd && 'You have reached the end!'}
-    </div>
+        {jobsEnd && 'You have reached the end!'}
+      </div>
     </main>
 
   )
